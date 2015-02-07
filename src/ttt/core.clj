@@ -1,7 +1,8 @@
 (ns ttt.core
   (:gen-class))
 
-(require '[ttt.ai :as ai])
+(require '[ttt.ai :as ai]
+         '[clojure.string :as s])
 
 (defn try-until [f message]
   "Keep trying until we get the input without errors."
@@ -32,7 +33,8 @@
       (recur message coll))))
 
 (defn stringify-board [board]
-  (apply str (interpose "\n" board)))
+  (-> (apply str (interpose "\n" board))
+      (s/replace "nil" " _")))
 
 (defn play-game
   ([player board]
