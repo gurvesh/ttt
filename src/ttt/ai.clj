@@ -1,5 +1,4 @@
-(ns ttt.core
-  (:gen-class))
+(ns ttt.ai)
 
 (def size 3)
 (def p1 :x)
@@ -20,8 +19,8 @@
             [x y]))]))
 
 (defn ttt-win [board]
-  (some {(vec (repeat size :x)) :x
-         (vec (repeat size :o)) :o}
+  (some {(vec (repeat size p1)) p1
+         (vec (repeat size p2)) p2}
         (concat board 
                 (apply map list board)
                 (for [d (diagonals)]
@@ -81,7 +80,4 @@
                :score (:score best-move)
                :next-board best-move}))))
 
-(defn next-ttt-move [board whos-move]
-  (:board (:next-board (score-ttt-board board whos-move))))
-
-(def play-ttt (memoize next-ttt-move))
+(def play-ttt (memoize score-ttt-board))
